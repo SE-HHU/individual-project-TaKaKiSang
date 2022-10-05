@@ -1,0 +1,72 @@
+package Javalearn;
+import java.util.Scanner;
+import java.util.Random;
+import java.io.*;
+
+public class Fourth {
+    public static void main(String[] args) {
+        System.out.println("Please input the number of the questions:");
+        Scanner sc = new Scanner(System.in);
+        Random r = new Random();
+        int num = sc.nextInt();
+        String[] str = new String[num];
+        String[] ans = new String[num];
+        Data[] problem = new Data[num];
+
+        for (int i = 0; i < num; i++) {
+            problem[i] = new Data();
+        }
+
+        for (int i = 0; i < num; i++) {
+            int sn = r.nextInt(2);
+            char[] s = new char[2];
+
+            for (int m = 0; m < sn + 1; m++) {
+                int ju = r.nextInt(2);
+                if (ju == 0)
+                    s[m] = '+';
+                else
+                    s[m] = '-';
+            }
+            int[] x = new int[3];
+            for (int n = 0; n < sn + 2; n++) {
+                x[n] = r.nextInt(100);
+                if (x[n] == 0)
+                    x[n] = r.nextInt(100);
+            }
+            problem[i].addnumber(x);
+            problem[i].addsymbol(s);
+            problem[i].checkanswer();
+            problem[i].getstr();
+            str[i] = (String) String.valueOf(i + 1) + ". " + problem[i].str;
+            ans[i] = (String) String.valueOf((i + 1)) + ". " + (String) String.valueOf(problem[i].result);
+        }
+        File file = new File("src\\Exercises.txt");
+        File file1 = new File("src\\Answers.txt");
+        FileWriter f = null;
+        FileWriter A = null;
+        BufferedWriter f1 = null;
+        BufferedWriter A1 = null;
+        try {
+            f = new FileWriter("src\\Exercises.txt");
+            f1 = new BufferedWriter(f);
+            A = new FileWriter("src\\Answers.txt");
+            A1 = new BufferedWriter(A);
+            for (int i = 0; i < str.length; i++) {
+                f1.write(str[i]);
+                f1.newLine();
+                A1.write(ans[i]);
+                A1.newLine();
+            }
+        } catch (Exception e) {
+        }finally {
+            try{
+                f1.close();
+                f.close();
+                A1.close();
+                A.close();
+            }catch (Exception e){
+            }
+        }
+    }
+}
