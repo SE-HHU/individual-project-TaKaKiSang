@@ -1,0 +1,83 @@
+package Javalearn;
+
+public class Data{
+    int [] num = new int[3];
+    char [] sn = new char[2];
+    int result = 0;
+    String str = null;
+    public void addnumber(int a[]){
+        num[0]=a[0];
+        num[1]=a[1];
+        num[2]=a[2];
+    }
+    public void addsymbol(char b[]) {
+        sn[0] = b[0];
+        sn[1] = b[1];
+    }
+    public void getstr(){
+        if(sn[1]==0)
+            str=String.valueOf(num[0])+String.valueOf(sn[0])+String.valueOf(num[1])+"=";
+        else
+            str=String.valueOf(num[0])+String.valueOf(sn[0])+String.valueOf(num[1])+String.valueOf(sn[1])+String.valueOf(num[2])+"=";
+    }
+    public void checkanswer(){
+        getresult();
+        if(result<0){
+            if(sn[1]==0){
+                int temp=num[0];num[0]=num[1];num[1]=temp;
+                getresult();
+            }
+            else {
+                if (sn[0] == '-' && sn[1] == '+') {
+                    int temp = num[0];
+                    num[0] = num[1];
+                    num[1] = temp;
+                    getresult();
+                } else if (sn[0] == '+' && sn[1] == '-') {
+                    int temp = num[1];
+                    num[1] = num[2];
+                    num[2] = temp;
+                    getresult();
+                } else if (sn[0] == '-' && sn[1] == '-') {
+                    int temp = 0;
+                    if (num[0] < num[1]) {
+                        temp = num[0];
+                        num[0] = num[1];
+                        num[1] = temp;
+                    }
+                    if (num[0] < num[2]) {
+                        temp = num[0];
+                        num[0] = num[2];
+                        num[2] = temp;
+                    }
+                    int x = num[0] - num[1] - num[2];
+                    if (x >= 0)
+                        getresult();
+
+                    else {
+                        sn[1] = '+';
+                        getresult();
+                    }
+                }
+            }
+        }
+    }
+    public void getresult(){
+        if(sn[0]=='+')
+            result=num[0]+num[1];
+        else
+            result=num[0]-num[1];
+
+        if(sn[1]==0){
+            return;
+        }
+
+        else{
+            if(sn[1]=='+')
+                result+=num[2];
+
+            else
+                result-=num[2];
+        }
+    }
+}
